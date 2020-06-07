@@ -29,7 +29,7 @@ public extension TimestampType {
     }
 }
 
-public extension Timestamp: TimestampType {
+extension Timestamp: TimestampType {
     
 }
 
