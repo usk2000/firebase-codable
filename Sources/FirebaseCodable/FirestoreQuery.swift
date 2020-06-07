@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-extension Query {
+public extension Query {
     
     func fetchDocuments(source: FirestoreSource, completion: @escaping (Result<QuerySnapshot, FCError>) -> Void) {
         

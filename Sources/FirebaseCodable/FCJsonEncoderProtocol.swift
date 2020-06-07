@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol FCJsonEncoderProtocol: AnyObject {
+public protocol FCJsonEncoderProtocol: AnyObject {
     func encodeIntoJson<T>(_ value: T) throws -> [String: Any] where T: Codable
     func encodeToJson<T>(_ value: T) throws -> [String: Any] where T: FirebaseCodable
     func encodeToJsonArray<T>(_ value: T) throws -> [[String: Any]] where T: Codable
 }
 
-extension FCJsonEncoderProtocol where Self: JSONEncoder {
+public extension FCJsonEncoderProtocol where Self: JSONEncoder {
     
     /// Convert Codable object to JSON object
     func encodeIntoJson<T>(_ value: T) throws -> [String: Any] where T: Codable {

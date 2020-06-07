@@ -12,7 +12,7 @@ public protocol FCJsonDecoderProtocol: AnyObject {
     func decode<T>(_ type: T.Type, json: [String: Any], id: String) throws -> T where T: FirebaseCodable    
 }
 
-extension FCJsonDecoderProtocol where Self: JSONDecoder {
+public extension FCJsonDecoderProtocol where Self: JSONDecoder {
     
     /// convert JSON object to Codable object
     func decode<T>(_ type: T.Type, json: Any) throws -> T where T: Decodable {

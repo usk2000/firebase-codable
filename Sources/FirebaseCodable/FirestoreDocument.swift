@@ -8,9 +8,9 @@
 import Foundation
 import FirebaseFirestore
 
-typealias DocumentHandler = (Result<Void, FCError>) -> Void
+public typealias DocumentHandler = (Result<Void, FCError>) -> Void
 
-extension DocumentReference {
+public extension DocumentReference {
     
     func getDocument(_ completion: @escaping (Result<DocumentSnapshot, FCError>) -> Void) {
         
@@ -46,7 +46,7 @@ extension DocumentReference {
     
 }
 
-extension DocumentReference {
+public extension DocumentReference {
     
     /// ドキュメントを取得し、指定したタイプに変換する
     /// - Parameters:
@@ -138,7 +138,7 @@ extension DocumentReference {
     }
 }
  
-extension DocumentReference {
+public extension DocumentReference {
     
     func setDataAsJson<T>(_ data: T, encoder: FCJsonEncoderProtocol, completion: @escaping (Result<Void, FCError>) -> Void) where T: FirebaseCodable {
         

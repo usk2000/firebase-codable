@@ -17,7 +17,7 @@ public protocol TimestampType: Codable {
     func dateValue() -> Date
 }
 
-extension TimestampType {
+public extension TimestampType {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         self.init(date: try container.decode(Date.self))
@@ -29,7 +29,7 @@ extension TimestampType {
     }
 }
 
-extension Timestamp: TimestampType {
+public extension Timestamp: TimestampType {
     
 }
 
