@@ -9,6 +9,7 @@ import Foundation
 
 public protocol FCQuery: AnyObject {
     associatedtype FCFirestoreSource
+    associatedtype FCListenerRegistration
     func getDocuments(source: FCFirestoreSource, completion: @escaping (FCQuerySnapshot?, Error?) -> Void)
     func addSnapshotListener(_ listener: @escaping (FCQuerySnapshot?, Error?) -> Void) -> FCListenerRegistration
 }
@@ -23,7 +24,13 @@ public protocol FCQueryDocumentSnapshot: AnyObject {
     func data() -> [String: Any]
 }
 
+public enum DocumentChangeType: Int {
+    case added
+    case modified
+    case removed
+}
+
 public protocol FCDocumentChange: AnyObject {
-    var type: FCDocumentChangeType { get }
+    var type: DocumentChangeType { get }
     var document: FCQueryDocumentSnapshot { get }
 }
