@@ -7,13 +7,13 @@
 
 import Foundation
 
-public enum SnapshotDiff<T> {
+open enum SnapshotDiff<T> {
     case added([T])
     case modified([T])
     case removed([T])
 }
 
-public struct FCSnapshotDiff<T> {
+open struct FCSnapshotDiff<T> {
     let diffs: [SnapshotDiff<T>]
 }
 
