@@ -7,7 +7,7 @@
 
 import Foundation
 
-open enum SnapshotDiff<T> {
+public enum SnapshotDiff<T> {
     case added([T])
     case modified([T])
     case removed([T])
