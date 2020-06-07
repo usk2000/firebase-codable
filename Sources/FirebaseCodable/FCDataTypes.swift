@@ -7,8 +7,10 @@
 
 import Foundation
 
-public protocol FCFirestoreSource: AnyObject { }
-public protocol FCListenerRegistration: AnyObject { }
+public protocol FCFirestoreSource { }
+public protocol FCListenerRegistration: AnyObject {
+    func remove()
+}
 
 public protocol FCTimestamp: Codable {
     init(date: Date)
