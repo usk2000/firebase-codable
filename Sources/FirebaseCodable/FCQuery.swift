@@ -31,6 +31,8 @@ public enum DocumentChangeType: Int {
 }
 
 public protocol FCDocumentChange: AnyObject {
-    var type: DocumentChangeType { get }
+    associatedtype FCDocumentChangeType
+    associatedtype FCQueryDocumentSnapshot
+    var type: FCDocumentChangeType { get }
     var document: FCQueryDocumentSnapshot { get }
 }
