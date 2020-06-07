@@ -13,7 +13,7 @@ open enum SnapshotDiff<T> {
     case removed([T])
 }
 
-open struct FCSnapshotDiff<T> {
+public struct FCSnapshotDiff<T> {
     let diffs: [SnapshotDiff<T>]
 }
 
