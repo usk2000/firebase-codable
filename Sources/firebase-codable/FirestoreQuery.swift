@@ -91,7 +91,7 @@ extension Query {
                 }
             })
             
-            let response = DocumentResponse<T>.init(items: result, lastSnapshot: snapshot!.documents.last)
+            let response = FCDocumentResponse<T>.init(items: result, lastSnapshot: snapshot!.documents.last)
             DispatchQueue.main.async {
                 completion(.success(response))
             }

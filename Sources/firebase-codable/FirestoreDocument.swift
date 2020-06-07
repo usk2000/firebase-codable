@@ -67,7 +67,6 @@ extension DocumentReference {
                             let value = try decoder.decode(type, json: data, id: snapshot.documentID)
                             completion(.success(value))
                         } catch let error {
-                            //Log.debug(error)
                             completion(.failure(.systemError(error)))
                         }
                         
@@ -76,7 +75,6 @@ extension DocumentReference {
                     }
                     
                 case .failure(let error):
-                    Log.debug(error)
                     completion(.failure(.firebaseError(error)))
                 }
             }
@@ -163,7 +161,7 @@ extension DocumentReference {
             switch result {
             case .success:
                 //nothing todo
-                Log.verbose("success to save")
+                break
                 
             case .failure(let err):
                 error = err

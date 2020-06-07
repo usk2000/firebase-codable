@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 struct FCDocumentResponse<T> {
     let items: [T]
