@@ -6,33 +6,12 @@
 //
 
 import Foundation
-import FirebaseFirestore
 
-public typealias DocumentHandler = (Result<Void, FCError>) -> Void
-
-public extension DocumentReference {
+public extension FCDocumentReference {
     
-    func getDocument(_ completion: @escaping (Result<DocumentSnapshot, FCError>) -> Void) {
+    func getDocument(source: FCFirestoreSource, completion: @escaping (Result<FCDocumentSnapshot, FCError>) -> Void) {
         
-        self.getDocument { (snapshot, error) in
-            
-            if let error = error {
-                DispatchQueue.main.async {
-                    completion(.failure(.firebaseError(error)))
-                }
-                return
-            }
-            
-            DispatchQueue.main.async {
-                completion(.success(snapshot!))
-            }
-        }
-        
-    }
-    
-    func getDocument(source: FirestoreSource, completion: @escaping (Result<DocumentSnapshot, FCError>) -> Void) {
-        
-        self.getDocument(source: source) { (snapshot, error) in
+        self.getDocument(source: source) { snapshot, error in
             DispatchQueue.main.async {
                 if let error = error {
                     completion(.failure(.firebaseError(error)))
@@ -46,15 +25,15 @@ public extension DocumentReference {
     
 }
 
-public extension DocumentReference {
+public extension FCDocumentReference {
     
     /// ドキュメントを取得し、指定したタイプに変換する
     /// - Parameters:
     ///   - type: タイプ
     ///   - source: ソース(デフォルト・キャッシュ・サーバ)
     ///   - decoder: デコーダー
-    func getDocumentAs<T>(_ type: T.Type, source: FirestoreSource, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<T?, FCError>) -> Void) where T: FirebaseCodable {
-        
+    func getDocumentAs<T>(_ type: T.Type, source: FCFirestoreSource, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<T?, FCError>) -> Void) where T: FirebaseCodable {
+                
         self.getDocument(source: source) { result in
                         
             DispatchQueue.main.async {
@@ -82,7 +61,7 @@ public extension DocumentReference {
         }
     }
     
-    func getDocumentSyncAs<T: FirebaseCodable>(_ type: T.Type, source: FirestoreSource, decoder: FCJsonDecoderProtocol) throws -> T? {
+    func getDocumentSyncAs<T: FirebaseCodable>(_ type: T.Type, source: FCFirestoreSource, decoder: FCJsonDecoderProtocol) throws -> T? {
         
         var document: T?
         var error: Error?
@@ -109,7 +88,7 @@ public extension DocumentReference {
     }
     
     @discardableResult
-    func addSnapshotListenerAs<T: FirebaseCodable>(_ type: T.Type, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<T?, FCError>) -> Void) -> ListenerRegistration {
+    func addSnapshotListenerAs<T: FirebaseCodable>(_ type: T.Type, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<T?, FCError>) -> Void) -> FCListenerRegistration {
         
         return self.addSnapshotListener { snapshot, error in
                         
@@ -138,7 +117,7 @@ public extension DocumentReference {
     }
 }
  
-public extension DocumentReference {
+public extension FCDocumentReference {
     
     func setDataAsJson<T>(_ data: T, encoder: FCJsonEncoderProtocol, completion: @escaping (Result<Void, FCError>) -> Void) where T: FirebaseCodable {
         

@@ -6,11 +6,10 @@
 //
 
 import Foundation
-import FirebaseFirestore
 
-public extension Query {
+public extension FCQuery {
     
-    func fetchDocuments(source: FirestoreSource, completion: @escaping (Result<QuerySnapshot, FCError>) -> Void) {
+    func fetchDocuments(source: FCFirestoreSource, completion: @escaping (Result<FCQuerySnapshot, FCError>) -> Void) {
         
         self.getDocuments(source: source) { snapshot, error in
             
@@ -28,9 +27,9 @@ public extension Query {
         
     }
     
-    func getDocuments(source: FirestoreSource, completion: @escaping (Result<QuerySnapshot, FCError>) -> Void) {
+    func getDocuments(source: FCFirestoreSource, completion: @escaping (Result<FCQuerySnapshot, FCError>) -> Void) {
         
-        self.getDocuments(source: source) { (snapshot, error) in
+        self.getDocuments(source: source) { snapshot, error in
             
             if let error = error as NSError? {
                 completion(.failure(.firebaseError(error)))
@@ -43,7 +42,7 @@ public extension Query {
         
     }
         
-    func getDocumentsAs<T>(_ type: T.Type, source: FirestoreSource, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<[T], FCError>) -> Void) where T: FirebaseCodable {
+    func getDocumentsAs<T>(_ type: T.Type, source: FCFirestoreSource, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<[T], FCError>) -> Void) where T: FirebaseCodable {
         
         self.getDocuments(source: source) { (snapshot, error) in
             
@@ -71,7 +70,7 @@ public extension Query {
         
     }
     
-    func getDocumentResponseAs<T>(_ type: T.Type, source: FirestoreSource, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<FCDocumentResponse<T>, FCError>) -> Void) where T: FirebaseCodable {
+    func getDocumentResponseAs<T>(_ type: T.Type, source: FCFirestoreSource, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<FCDocumentResponse<T>, FCError>) -> Void) where T: FirebaseCodable {
         
         self.getDocuments(source: source) { snapshot, error in
             
@@ -81,7 +80,7 @@ public extension Query {
                 }
                 return
             }
-            
+
             let result = snapshot!.documents.compactMap({ child -> T? in
                 do {
                     return try decoder.decode(type, json: child.data(), id: child.documentID)
@@ -100,7 +99,7 @@ public extension Query {
         
     }
     
-    func getDocumentsSync<T: FirebaseCodable>(_ type: T.Type, source: FirestoreSource, decoder: FCJsonDecoderProtocol) throws -> [T] {
+    func getDocumentsSync<T: FirebaseCodable>(_ type: T.Type, source: FCFirestoreSource, decoder: FCJsonDecoderProtocol) throws -> [T] {
         
         var documents: [T] = []
         var error: Error?
@@ -133,8 +132,8 @@ public extension Query {
         return documents
     }
     
-    func getDocumentsSync(source: FirestoreSource) throws -> QuerySnapshot {
-        var snapshot: QuerySnapshot?
+    func getDocumentsSync(source: FCFirestoreSource) throws -> FCQuerySnapshot {
+        var snapshot: FCQuerySnapshot?
         var error: Error?
         let semaphore = DispatchSemaphore(value: 0)
 
@@ -158,7 +157,7 @@ public extension Query {
     }
     
     @discardableResult
-    func addSnapshotListenerAs<T: FirebaseCodable>(_ type: T.Type, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<FCSnapshotDiff<T>, FCError>) -> Void) -> ListenerRegistration {
+    func addSnapshotListenerAs<T: FirebaseCodable>(_ type: T.Type, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<FCSnapshotDiff<T>, FCError>) -> Void) -> FCListenerRegistration {
         
         return addSnapshotListener({ snapshot, error in
             if let error = error {

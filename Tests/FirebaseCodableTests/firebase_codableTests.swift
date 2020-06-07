@@ -1,5 +1,5 @@
 import XCTest
-@testable import firebase_codable
+@testable import FirebaseCodable
 
 final class firebase_codableTests: XCTestCase {
     func testExample() {
