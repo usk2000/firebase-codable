@@ -8,6 +8,7 @@
 import Foundation
 
 public protocol FCQuery: AnyObject {
+    associatedtype FCFirestoreSource
     func getDocuments(source: FCFirestoreSource, completion: @escaping (FCQuerySnapshot?, Error?) -> Void)
     func addSnapshotListener(_ listener: @escaping (FCQuerySnapshot?, Error?) -> Void) -> FCListenerRegistration
 }

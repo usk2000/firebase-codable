@@ -7,7 +7,6 @@
 
 import Foundation
 
-public protocol FCFirestoreSource { }
 public protocol FCListenerRegistration: AnyObject {
     func remove()
 }

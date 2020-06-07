@@ -10,6 +10,7 @@ import Foundation
 public typealias FCDocumentHandler = (Result<Void, FCError>) -> Void
 
 public protocol FCDocumentReference: AnyObject {
+    associatedtype FCFirestoreSource
     func getDocument(source: FCFirestoreSource, completion: @escaping (FCDocumentSnapshot?, Error?) -> Void)
     func setData(_ documentData: [String: Any], completion: ((Error?) -> Void)?)
     func updateData(_ fields: [AnyHashable : Any], completion: ((Error?) -> Void)?)
