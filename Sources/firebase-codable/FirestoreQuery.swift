@@ -58,7 +58,7 @@ extension Query {
                 do {
                     return try decoder.decode(type, json: child.data(), id: child.documentID)
                 } catch let error {
-                    Log.verbose(error)
+                    debugPrint(error)
                     return nil
                 }
             })
@@ -71,7 +71,7 @@ extension Query {
         
     }
     
-    func getDocumentResponseAs<T>(_ type: T.Type, source: FirestoreSource, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<DocumentResponse<T>, FCError>) -> Void) where T: FirebaseCodable {
+    func getDocumentResponseAs<T>(_ type: T.Type, source: FirestoreSource, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<FCDocumentResponse<T>, FCError>) -> Void) where T: FirebaseCodable {
         
         self.getDocuments(source: source) { snapshot, error in
             
@@ -86,8 +86,7 @@ extension Query {
                 do {
                     return try decoder.decode(type, json: child.data(), id: child.documentID)
                 } catch let error {
-                    Log.verbose(child.reference.path)
-                    Log.verbose(error)
+                    debugPrint(error)
                     return nil
                 }
             })
@@ -115,7 +114,7 @@ extension Query {
                     do {
                         return try decoder.decode(type, json: child.data(), id: child.documentID)
                     } catch let error {
-                        Log.debug(error)
+                        debugPrint(error)
                         return nil
                     }
                 })
@@ -172,7 +171,7 @@ extension Query {
                     do {
                         return try decoder.decode(type, json: change.document.data(), id: change.document.documentID)
                     } catch let error {
-                        Log.debug(error)
+                        debugPrint(error)
                         return nil
                     }
                 })
@@ -180,7 +179,7 @@ extension Query {
                     do {
                         return try decoder.decode(type, json: change.document.data(), id: change.document.documentID)
                     } catch let error {
-                        Log.debug(error)
+                        debugPrint(error)
                         return nil
                     }
                 })
@@ -188,7 +187,7 @@ extension Query {
                     do {
                         return try decoder.decode(type, json: change.document.data(), id: change.document.documentID)
                     } catch let error {
-                        Log.debug(error)
+                        debugPrint(error)
                         return nil
                     }
                 })
